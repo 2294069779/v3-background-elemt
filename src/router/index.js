@@ -1,9 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Index from '~/page/index.vue'
 import NotFound from '~/page/404.vue'
+import login from '~/page/login.vue'
 const routes=[
-  {path:'/',component:Index},
+  {path:'/',component:Index,meta:{title:'主页'}},
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
+  {path:'/login',component:login , meta:{title:'登录'}}
 
 ]
 const router = createRouter({
