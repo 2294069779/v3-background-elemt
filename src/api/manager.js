@@ -23,3 +23,16 @@ export function loginOut(){
         url:'/admin/logout'
     })
 }
+/**
+ * 
+ * 修改密码
+ * body：{oldpassword，password	，repassword}
+ * @returns 
+ */
+export function updatepassword(data){
+    return instance({
+        method:'post',
+        url:'/admin/updatepassword',
+        data
+    })
+}

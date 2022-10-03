@@ -2,6 +2,7 @@
 import axios from "axios";
 import { getToken } from '~/utility/auth';
 import { message } from '~/utility/utill'
+import store from "../store";
 
 
 const instance=axios.create({
@@ -13,11 +14,10 @@ const instance=axios.create({
 instance.interceptors.request.use(function (config) {
   
   const token=getToken()
-  if (token) {
-    
+  if (token) { 
     config.headers['token']=token
   }
-  // console.log(2)
+  
   return config;
 }, function (error) {
   // 对请求错误做些什么
@@ -33,10 +33,13 @@ instance.interceptors.response.use(function (response) {
 }, function (error) {
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误做点什么
-  
+    const msg = error.response.data.msg
+    if (msg == '非法token，请先登录！') {
+      store.dispatch('user/loginOut').finally(()=>location.reload())
+    }
    
       
-       message(error.response.data.msg || '请求失败','error')
+       message(msg || '请求失败','error')
        return Promise.reject(error);
 });
 export default instance

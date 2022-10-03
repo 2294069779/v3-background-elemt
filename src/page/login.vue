@@ -66,7 +66,7 @@ const subitFrom = () => {
         if (valud) {
             loading.value = true
             try {
-                await store.dispatch('user/login', form)
+                await store.dispatch('user/login',form)
                 message('成功登录')
                 $router.push('/')
             } finally {
