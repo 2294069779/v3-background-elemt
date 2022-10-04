@@ -4,8 +4,10 @@
                 <f-header></f-header>
         </el-header>
         <el-container>
-            <el-aside> 
-                <f-aside></f-aside>
+            <el-aside class="aside" :width="$store.state.user.asideWidth" > 
+                <f-aside >
+                   
+                </f-aside>
             </el-aside>
             <el-main>
                 <f-tab-list></f-tab-list>
@@ -22,3 +24,9 @@
     import FTabList from './components/FTabList.vue';
 
 </script>
+
+<style scoped>
+::v-deep(.aside){
+    transition: all 0.2s;
+}
+</style>

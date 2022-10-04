@@ -5,11 +5,13 @@
             后台管理系统
         </span>
 
-        <i class="iconfont icon-shutiao iconhear"></i>
+
+        <el-tooltip effect="dark" content="折叠菜单" placement="bottom">
+            <i class="iconfont icon-shutiao iconhear" @click="store.commit('user/setasideWidth')"></i>
+        </el-tooltip>
         <el-tooltip effect="dark" content="刷新" placement="bottom">
             <i class="iconfont icon-kafei iconhear ml-3 " @click="headlereload"></i>
         </el-tooltip>
-
 
         <div class="dropdown">
             <el-tooltip effect="dark" content="全屏" placement="bottom">
@@ -32,11 +34,10 @@
         </div>
     </div>
 
-    <!-- // 修改密码抽屉 -->
-    <el-drawer v-model="showdrawer" title="修改密码" :with-header="false">
+    <FromDrawer ref="refFromDrawer" title="修改密码" destroyOnClose @sumbit="updatepwd">
         <el-form :model="updatepa" ref="rulepassword" :rules="rules" label-width="">
-            <el-form-item prop="oldpassword" label="旧密码" >
-                <el-input v-model="updatepa.oldpassword" placeholder="请输入旧密码" type="password" >
+            <el-form-item prop="oldpassword" label="旧密码">
+                <el-input v-model="updatepa.oldpassword" placeholder="请输入旧密码" type="password">
                 </el-input>
             </el-form-item>
             <el-form-item prop="password" label="新密码">
@@ -47,90 +48,43 @@
                 <el-input v-model="updatepa.repassword" placeholder="请输入新密码" type="password" show-password>
                 </el-input>
             </el-form-item>
-           
-            <el-form-item>
-                <el-button  type='info' text :loading="loading" @click="updatepwd">修改</el-button>
-                <el-button  type='info' text >取消</el-button>
-            </el-form-item>
         </el-form>
-    </el-drawer>
+    </FromDrawer>
 </template>
 <script setup>
-import { dialogmessage, message } from '~/utility/utill.js'
-import { loginOut,updatepassword } from '~/api/manager.js'
-import { useRouter } from 'vue-router';
+
+import FromDrawer from '~/components/FromDrawer.vue';
+import { useFullscreen } from '@vueuse/core'
+import { useRepassword, useLogout } from './useManger'
 import { useStore } from 'vuex';
 
-
-import { useFullscreen } from '@vueuse/core'
-import { reactive, ref } from 'vue';
-
-const { toggle } = useFullscreen()
-const router = useRouter()
 const store = useStore()
-const loading = ref(false)
+const { toggle } = useFullscreen()
+const {
+    refFromDrawer,
+    updatepa,
+    rules,
+    rulepassword,
+    updatepwd,
+    // openrefFromDrawer
+} = useRepassword()
+const { handleloginOut
+    , headlereload
+} = useLogout()
 
-// 控制抽屉逻辑
-const showdrawer = ref(false)
-//修改密码
-const updatepa = reactive({
-    oldpassword: '',
-    password: '',
-    repassword: ''
-})
-// 修改密码验证表单
-const rules = ({
-    oldpassword: [{ required: true, message: '原密码不能为空', trigger: 'blur' }],
-    password: [{ required: true, message: '新密码不能为空', trigger: 'blur' }],
-    repassword: [{ required: true, message: '确定密码不能为空', trigger: 'blur' }]
-    
-})
- // 点击修改密码
- const rulepassword=ref(null)
- const updatepwd=()=>{
-    rulepassword.value.validate(async (valud) => {
-        if (valud) {
-            loading.value = true
-            try {
-                await updatepassword(updatepa)
-                message('修改成功，请重新登录')
-                store.dispatch('user/loginOut')
-            } finally {
-                loading.value = false
-            }
-            return false
-        }
-    })
- }
-//点击下来
+//点击下拉
 const ondropdown = (e) => {
-   
     switch (e) {
         case "loginOut":
             handleloginOut()
             break;
         case 'editpsw':
-            showdrawer.value = true
+            refFromDrawer.value.openShowDrawer()
+            // openrefFromDrawer()
             break;
     }
 }
-// 刷新按钮
-const headlereload = () => location.reload()
-// 点击退出
-const handleloginOut = () => {
-    dialogmessage('是否退出登录').then(async () => {
-        await loginOut()
-        store.dispatch('user/loginOut')
-        router.push('/login')
-        message('退出成功')
 
-
-    }).catch(() => {
-        console.log('取消');
-    })
-
-
-}
 
 
 </script>

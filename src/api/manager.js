@@ -36,3 +36,7 @@ export function updatepassword(data){
         data
     })
 }
+/**
+ * 获取管理员信息和权限菜单
+ */
+// export function getinfo
