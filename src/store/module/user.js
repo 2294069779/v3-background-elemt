@@ -35,6 +35,7 @@ const user = {
       context.commit('setmenu', userinfo.menus)
       context.commit('setruleNames', userinfo.ruleNames)
       context.commit('setUserInfo', userinfo)
+      return userinfo
     },
     // 退出登录
     loginOut(context){
