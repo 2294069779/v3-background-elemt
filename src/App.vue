@@ -9,6 +9,9 @@
 </div>
 </template>
 
-<style scoped>
+<style>
+   body{
+      @apply bg-light-500;
+   }
 
 </style>

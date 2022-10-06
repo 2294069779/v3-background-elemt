@@ -39,7 +39,7 @@ const  {
 
 <style scoped>
 .f-tag-list {
-    @apply fixed bg-light-700 flex items-center px-2;
+    @apply fixed bg-red-200 flex items-center px-2;
     top: 64px;
     right: 0;
     height: 44px;
