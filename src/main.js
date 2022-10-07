@@ -4,6 +4,7 @@ import App from './App.vue'
 import {router} from './router'
 import store from './store'
 
+
 // 权限拦截
 import './permission.js'
 import 'nprogress/nprogress.css'

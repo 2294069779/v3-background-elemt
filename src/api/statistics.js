@@ -12,3 +12,15 @@ import instance from "~/utility/axios"
         }
     })
 }
+/**
+ * 获取后台统计数据三
+ * query：type
+ * http://ceshi13.dishait.cn/admin/statistics3?type=hour
+ */
+ export function getstatistics3(type) {
+    return instance({
+        method: 'get',
+        url: '/admin/statistics3?type='+type,
+       
+    })
+}

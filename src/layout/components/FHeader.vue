@@ -92,6 +92,7 @@ const ondropdown = (e) => {
 .f-header {
     @apply flex bg-cool-gray-300 fixed top-0 left-0 right-0 text-light-50 items-center;
     height: 64px;
+    z-index: 100;
 }
 
 .f-header .login {
