@@ -13,5 +13,10 @@ const app =createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+
+//
+// 用户权限
+import permission from '~/directives/permission.js'
+app.use(permission)
   // 导入windicss框架
 app.use(router).use(store).mount('#app')

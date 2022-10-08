@@ -55,10 +55,17 @@
         <!-- chart图表 -->
         <el-row :gutter="10" style="margin-top:20px">
             <el-col :span="12">
-                <indexChart></indexChart>
+                <indexChart v-permission="['getStatistics3,GET']"></indexChart>
             </el-col>
-            <el-col :span="12"></el-col>
+            <el-col :span="12">
+                
+                <indexCard title="店铺及商品" tip="店铺及商品提示" :btns="goods" class="mb-2"></indexCard>
+                <indexCard  title="交易提示" tip="需要立刻处理的交易订单" :btns="order"></indexCard>
+                 
+            </el-col>
         </el-row>
+
+
     </div>
 
 </template>
@@ -67,7 +74,8 @@
 import indexChart from '~/components/indexChart.vue';
 import indexNav from '~/components/indexNav.vue';
 import { ref } from 'vue';
-import { getstatistics1 } from '~/api/statistics'
+import { getstatistics1,getstatistics2 } from '~/api/statistics'
+import indexCard from '~/components/indexCard.vue';
 import countNumVue from '~/components/countNum.vue';
 
 const statisticsinfo = ref([])
@@ -78,6 +86,14 @@ const getstatistics = async () => {
 
 getstatistics()
 
+// 获取数据二
+const goods =ref([])
+const order = ref([])
+
+getstatistics2().then((res)=>{
+    goods.value= res.goods
+    order.value = res.order
+})
 
 </script>
 

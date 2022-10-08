@@ -12,6 +12,20 @@ import instance from "~/utility/axios"
         }
     })
 }
+
+/**
+ * 获取后台统计数据二
+ * 
+ * http://ceshi13.dishait.cn/admin/statistics2
+ */
+ export function getstatistics2() {
+    return instance({
+        method: 'get',
+        url: '/admin/statistics2'
+       
+    })
+}
+
 /**
  * 获取后台统计数据三
  * query：type

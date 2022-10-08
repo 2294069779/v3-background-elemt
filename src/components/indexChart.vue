@@ -54,8 +54,11 @@ const handleCurrent = (value) => {
 let myChart = null
 onMounted(() => {
     let chartDom = document.getElementById('indexChart');
-    myChart = echarts.init(chartDom);
+    if(chartDom){
+        myChart = echarts.init(chartDom);
     getChartData()
+    }
+    
 })
  // 销毁
  onBeforeUnmount(()=>{
