@@ -21,7 +21,6 @@ export function useFTabfn() {
         if (initTab == undefined) {
             return
         }
-        console.log(1)
         TabsList.value = cookies.get('tab')
 
     }

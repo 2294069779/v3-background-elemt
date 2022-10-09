@@ -6,7 +6,7 @@
                     <slot></slot>
                 </div>
                 <div class="actions">
-                    <el-button type='info' @click="sumbit" :loading="loading">{{confirmText}}</el-button>
+                    <el-button type='primary' @click="sumbit" :loading="loading">{{confirmText}}</el-button>
                     <el-button type='info' @click="closeShowDrawer">取消</el-button>
                 </div>
             </div>
