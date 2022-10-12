@@ -18,6 +18,7 @@
 import { ref } from 'vue';
 
 const showdrawer = ref(false)
+// 打开和关闭
 const openShowDrawer = () => showdrawer.value = true
 const closeShowDrawer = () =>  showdrawer.value = false
 

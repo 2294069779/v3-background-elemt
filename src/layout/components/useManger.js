@@ -26,6 +26,7 @@ export function useRepassword() {
     // 点击修改密码
     const rulepassword = ref(null)
     const updatepwd = () => {
+        console.log(1)
         rulepassword.value.validate(async (valud) => {
             if (valud) {
                 refFromDrawer.value.showloading()

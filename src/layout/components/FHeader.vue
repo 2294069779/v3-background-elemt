@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <FromDrawer ref="refFromDrawer" title="修改密码" destroyOnClose @sumbit="updatepwd">
+    <FromDrawer ref="refFromDrawer" title="修改密码" destroyOnClose @submit="updatepwd">
         <el-form :model="updatepa" ref="rulepassword" :rules="rules" label-width="">
             <el-form-item prop="oldpassword" label="旧密码">
                 <el-input v-model="updatepa.oldpassword" placeholder="请输入旧密码" type="password">

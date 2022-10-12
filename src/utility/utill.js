@@ -1,7 +1,8 @@
-export function message(message,type="success"){
+export function message(message,type="success",dangerouslyUseHTMLString=true){
     ElMessage({
         message,
         type,
+        dangerouslyUseHTMLString,
         duration:2000
     })
 }
