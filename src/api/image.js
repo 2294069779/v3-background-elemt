@@ -12,3 +12,27 @@ export function getimage(id,page){
         url:`/admin/image_class/${id}/image/${page}`
     })
 }
+
+/**
+ * 删除
+ * @returns 
+ */
+ export function delectImageName(ids){
+    return instance({
+        method:'post',
+        url:`/admin/image/delete_all`,
+        data:{ ids:[ids] }
+    })
+}
+
+/**
+ * 修改
+ * @returns 
+ */
+ export function postImageName(id,name){
+    return instance({
+        method:'post',
+        url:`/admin/image/${id}`,
+        data:{name}
+    })
+}

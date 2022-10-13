@@ -14,7 +14,7 @@
             </template>
         </el-popconfirm>
 
-        <el-button text type="primary" @click="$emit('edit')">
+        <el-button text type="primary" @click.stop="$emit('edit')">
             <el-icon :size="12">
                 <Edit />
             </el-icon>

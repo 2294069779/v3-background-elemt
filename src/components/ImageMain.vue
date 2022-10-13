@@ -4,28 +4,37 @@
             <el-row :gutter="20" style="padding:0 20px">
                 <el-col :span="6" v-for="(item,index) in list" :key="index" style="margin-bottom:20px;">
                     <el-card shadow="hover" :body-style="{ padding:0 }" class="relative">
-                        <el-image fit="fill" :src="item.url" lazy="true" style="height:150px;width:100%"></el-image>
+                        <el-image fit="fill" :src="item.url"  style="height:150px;width:100%"
+                            :preview-src-list="[item.url]" :initial-index="0"></el-image>
                         <div class="image-name">{{item.name}}</div>
                         <div class="flex justify-center items-center">
-                            <el-button type="primary" text size="small">重命名</el-button>
-                            <el-button type="primary" text size="small">删除</el-button>
+                            <el-button type="primary" text size="small" @click="modifyImageName(item)">重命名</el-button>
+                            
+                            <el-popconfirm title="确定删除该图片嘛?" confirm-button-text="确定" cancel-button-text="取消"  @confirm="delectImage(item)">
+                                <template #reference>
+                                    <el-button type="primary" text size="small">删除</el-button>
+                                </template>
+                            </el-popconfirm>
                         </div>
                     </el-card>
                 </el-col>
-                
+
             </el-row>
         </div>
         <div class="bottom">
             <el-pagination :page-size="limit" :current-page="currentPage" layout="prev,pager,next" :total="total"
                 @current-change="getData" />
         </div>
-        
+
     </el-main>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { getimage } from '~/api/image.js'
+import {
+    getimage, postImageName,delectImageName
+} from '~/api/image.js'
+import { dilogElMessageBox, message } from '~/utility/utill.js'
 
 const loading = ref(false)
 // 分页功能
@@ -43,7 +52,7 @@ const getData = (p = null) => {
     getimage(imageClassId.value, currentPage.value).then((res) => {
         total.value = res.totalCount
         list.value = res.list
-        console.log(res)
+
     }).finally(() => {
         loading.value = false
     })
@@ -54,6 +63,30 @@ const IdClassgetData = (id) => {
     currentPage.value = 1
     getData()
 }
+
+// 图片重命名
+const modifyImageName = (item) => {
+    dilogElMessageBox('重命名', item.name).then((res) => {
+        loading.value = true
+        postImageName(item.id, res.value).then(() => {
+            getData()
+            message('重命名成功')
+        }).finally(() => {
+            loading.value = false
+        })
+
+    })
+}
+// 删除图片
+const delectImage=(item)=>{
+    loading.value = true
+    delectImageName(item.id).then(()=>{
+        getData()
+        message('删除成功')
+    }).finally(() => {
+            loading.value = false
+        })
+    }
 defineExpose({
     IdClassgetData
 })
@@ -65,6 +98,10 @@ defineExpose({
     position: relative;
 }
 
+::v-deep(.el-image-viewer__img) {
+    width: 70%;
+    height: 80%;
+}
 
 .image-main .top {
     position: absolute;
@@ -82,11 +119,12 @@ defineExpose({
     bottom: 0;
     height: 50px;
 }
-.image-main .image-name{
+
+.image-main .image-name {
     height: 23px;
     position: absolute;
     top: 129px;
-    left:0px;
+    left: 0px;
     right: 0px;
     overflow: hidden;
     text-overflow: ellipsis;
