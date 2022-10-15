@@ -4,13 +4,14 @@
             <el-row :gutter="20" style="padding:0 20px">
                 <el-col :span="6" v-for="(item,index) in list" :key="index" style="margin-bottom:20px;">
                     <el-card shadow="hover" :body-style="{ padding:0 }" class="relative">
-                        <el-image fit="fill" :src="item.url"  style="height:150px;width:100%"
+                        <el-image fit="fill" :src="item.url" style="height:150px;width:100%"
                             :preview-src-list="[item.url]" :initial-index="0"></el-image>
                         <div class="image-name">{{item.name}}</div>
                         <div class="flex justify-center items-center">
                             <el-button type="primary" text size="small" @click="modifyImageName(item)">重命名</el-button>
-                            
-                            <el-popconfirm title="确定删除该图片嘛?" confirm-button-text="确定" cancel-button-text="取消"  @confirm="delectImage(item)">
+
+                            <el-popconfirm title="确定删除该图片嘛?" confirm-button-text="确定" cancel-button-text="取消"
+                                @confirm="delectImage(item)">
                                 <template #reference>
                                     <el-button type="primary" text size="small">删除</el-button>
                                 </template>
@@ -25,16 +26,19 @@
             <el-pagination :page-size="limit" :current-page="currentPage" layout="prev,pager,next" :total="total"
                 @current-change="getData" />
         </div>
-
     </el-main>
+
+    <el-drawer v-model="tableImage" title="上传图片">
+        <updateImage :data="{image_class_id:imageClassId}" @successimg="handlesuccessimg" ></updateImage>
+    </el-drawer>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import {
-    getimage, postImageName,delectImageName
-} from '~/api/image.js'
+import { getimage, postImageName, delectImageName } from '~/api/image.js'
 import { dilogElMessageBox, message } from '~/utility/utill.js'
+
+import updateImage from '~/components/updateImage.vue'
 
 const loading = ref(false)
 // 分页功能
@@ -78,17 +82,29 @@ const modifyImageName = (item) => {
     })
 }
 // 删除图片
-const delectImage=(item)=>{
+const delectImage = (item) => {
     loading.value = true
-    delectImageName(item.id).then(()=>{
+    delectImageName(item.id).then(() => {
         getData()
         message('删除成功')
     }).finally(() => {
-            loading.value = false
-        })
-    }
+        loading.value = false
+    })
+}
+
+// 上传图片
+const tableImage = ref(false)
+const updateTableImage = ()=>{
+    tableImage.value=true
+}
+// 图片上传成功
+const handlesuccessimg=()=> {
+    getData(1) 
+    tableImage.value=false
+}
 defineExpose({
-    IdClassgetData
+    IdClassgetData,
+    updateTableImage
 })
 
 </script>

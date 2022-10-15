@@ -3,6 +3,7 @@
     <el-container class="bg-light-50" :style="{height:(h+'px')}">
         <el-header class="image-header">
             <el-button type="primary" size="small" @click="handleAsideShowOpen">新增图片分类</el-button>
+            <el-button type="primary" size="small" @click="handleUpdateImage">上传图片</el-button>
         </el-header>
         <el-container>
             <imageAside ref="showOpen" @changeClassId="handlechange"></imageAside>
@@ -30,6 +31,9 @@ const changeImage =ref(null)
 //切换图片对应按钮，通知图片组件切换
 const handlechange=(id)=>{
     changeImage.value.IdClassgetData(id)
+}
+const handleUpdateImage=()=>{
+    changeImage.value.updateTableImage()
 }
 </script>
 

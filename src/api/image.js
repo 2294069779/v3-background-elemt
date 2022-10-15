@@ -36,3 +36,6 @@ export function getimage(id,page){
         data:{name}
     })
 }
+
+// 上传图片地址
+export const ACTIONS = '/api/admin/image/upload'

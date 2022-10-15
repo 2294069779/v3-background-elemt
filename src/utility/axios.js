@@ -28,12 +28,15 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (response) {
   // 2xx 范围内的状态码都会触发该函数。
   // 对响应数据做点什么
+
   
-  return response.data.data;
+  return response.data.data || response.data;
 }, function (error) {
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误做点什么
+   
     const msg = error.response.data.msg
+   
     if (msg == '非法token，请先登录！') {
       store.dispatch('user/loginOut').finally(()=>location.reload())
     }
@@ -41,5 +44,6 @@ instance.interceptors.response.use(function (response) {
       
        message(msg || '请求失败','error')
        return Promise.reject(error);
+  
 });
 export default instance

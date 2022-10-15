@@ -30,12 +30,17 @@ const user = {
       setToken(res.token)
     },
     // 获取用户信息
-    async getUserInfo(context) {
-      const userinfo = await getinfo()
-      context.commit('setmenu', userinfo.menus)
-      context.commit('setruleNames', userinfo.ruleNames)
-      context.commit('setUserInfo', userinfo)
-      return userinfo
+     getUserInfo(context) {
+       return getinfo().then((userinfo)=>{
+        console.log(userinfo)
+        context.commit('setmenu', userinfo.menus)
+        context.commit('setruleNames', userinfo.ruleNames)
+        context.commit('setUserInfo', userinfo)
+        return userinfo
+      })
+      
+       
+      
     },
     // 退出登录
     loginOut(context){
