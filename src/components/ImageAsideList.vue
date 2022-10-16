@@ -3,22 +3,27 @@
         <span class="truncate ml-3">
             <slot></slot>
         </span>
-        <el-popconfirm title="是否删除" confirm-button-text="确定" cancel-button-text="取消"
-            @confirm="$emit('ondelectImageClass')">
-            <template #reference>
-                <el-button class="ml-auto px-1" text type="primary" @click="$emit('close')">
-                    <el-icon :size="12">
-                        <Close />
-                    </el-icon>
-                </el-button>
-            </template>
-        </el-popconfirm>
 
+            <span @click.stop="()=>{}" class="nn">
+            <el-popconfirm title="是否删除" confirm-button-text="确定" cancel-button-text="取消"
+                @confirm="$emit('ondelectImageClass')" >
+                <template #reference>
+                    <el-button class="ml-auto px-1" text type="primary" @click="$emit('close')">
+                        <el-icon :size="12">
+                            <Close />
+                        </el-icon>
+                    </el-button>
+                </template>
+            </el-popconfirm>
+       
         <el-button text type="primary" @click.stop="$emit('edit')">
             <el-icon :size="12">
                 <Edit />
             </el-icon>
         </el-button>
+    </span>
+   
+
 
 
 
@@ -39,12 +44,14 @@ defineProps({
     border-bottom: 1px solid #f4f4f4;
     display: flex;
     align-items: center;
+    justify-content : space-between;
     padding: 1px;
     font-size: 12px;
     color: #667082;
-
 }
-
+.aside-list .nn{
+    margin-right: 1px;
+}
 .aside-list:hover,
 .active {
     background-color: #F2F9FF;

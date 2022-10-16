@@ -13,7 +13,7 @@
                 <f-tab-list></f-tab-list>
                 <router-view v-slot="{Component}">
                     <transition name="fade" mode="out-in">
-                    <keep-alive>  <component :is="Component" :max="5"></component>  </keep-alive>
+                      <component :is="Component" :max="5" ></component> 
                     </transition>
                 </router-view>
             </el-main>
@@ -26,11 +26,7 @@
     import FAside from './components/FAside.vue';
     import FHeader from './components/FHeader.vue';
     import FTabList from './components/FTabList.vue';
-//   /* -webkit-transform: scale(1);
-//     transform: scale(1);
-//     -webkit-transform: translateY(-1200px) scale(0.7);
-//     transform: translateY(-1200px) scale(0.7);
-//     opacity: 0.7; */
+
 </script>
 
 <style >

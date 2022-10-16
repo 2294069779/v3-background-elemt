@@ -32,7 +32,6 @@ const user = {
     // 获取用户信息
      getUserInfo(context) {
        return getinfo().then((userinfo)=>{
-        console.log(userinfo)
         context.commit('setmenu', userinfo.menus)
         context.commit('setruleNames', userinfo.ruleNames)
         context.commit('setUserInfo', userinfo)
