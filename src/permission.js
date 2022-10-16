@@ -13,7 +13,7 @@ router.beforeEach(async(to, from,next) => {
     const token= getToken()
     // 返回 false 以取消导航
   let  hasNewRouters=false
-    if(token ){
+    if(token){
       if(!hanTop) {
         let res=  await store.dispatch('user/getUserInfo')
         hasNewRouters=  addRouters(res.menus)
@@ -31,7 +31,7 @@ router.beforeEach(async(to, from,next) => {
     let title = (to.meta.title ? to.meta.title : ' 未知')+'--后台管理系统'
     document.title= title
     
-  hasNewRouters ?next(to.fullPath):next()
+  hasNewRouters ? next(to.fullPath):next()
   })
 
   // 后置守卫

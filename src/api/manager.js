@@ -40,3 +40,15 @@ export function updatepassword(data){
  * 获取管理员信息和权限菜单
  */
 // export function getinfo
+
+export function getManagerList(page,limit='',keyword=''){
+    return instance({
+        method:'get',
+        url:`/admin/manager/${page}`,
+        params:{
+            limit,
+            keyword
+        }
+        
+    })
+}
