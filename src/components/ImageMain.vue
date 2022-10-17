@@ -3,14 +3,16 @@
         <div class="top">
             <el-row :gutter="20" style="padding:0 20px">
                 <el-col :span="6" v-for="(item,index) in list" :key="index" style="margin-bottom:20px;">
-                    <el-card shadow="hover" :body-style="{ padding:0 }" class="relative">
+                    <el-card shadow="hover" :body-style="{ padding:0 }" class="relative" :class="{'!border-blue-500': item.checkbox}">
                         <el-image fit="fill" :src="item.url" style="height:150px;width:100%"
                             :preview-src-list="[item.url]" :initial-index="0"></el-image>
                         <div class="image-name">{{item.name}}</div>
                         <div class="flex justify-center items-center">
-                            <el-button type="primary" text size="small" @click="modifyImageName(item)">重命名</el-button>
 
-                            <el-popconfirm title="确定删除该图片嘛?" confirm-button-text="确定" cancel-button-text="取消"
+                            <el-checkbox v-if="openChoose" v-model="item.checkbox" @change="handleCheckbox(item)"></el-checkbox>
+                            
+                            <el-button type="primary" text size="small" @click="modifyImageName(item)">重命名</el-button>
+                            <el-popconfirm title="确定删除该图片嘛?" confirm-button-text="确定" cancel-button-text="取消" class="!m-0"
                                 @confirm="delectImage(item)">
                                 <template #reference>
                                     <el-button type="primary" text size="small">删除</el-button>
@@ -34,11 +36,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref,computed } from 'vue';
 import { getimage, postImageName, delectImageName } from '~/api/image.js'
 import { dilogElMessageBox, message } from '~/utility/utill.js'
 
 import updateImage from '~/components/updateImage.vue'
+
 
 const loading = ref(false)
 // 分页功能
@@ -55,7 +58,9 @@ const getData = (p = null) => {
     loading.value = true
     getimage(imageClassId.value, currentPage.value).then((res) => {
         total.value = res.totalCount
-        list.value = res.list
+        list.value = res.list.map((e)=>{e.checkbox=false
+             return e})
+
 
     }).finally(() => {
         loading.value = false
@@ -67,7 +72,12 @@ const IdClassgetData = (id) => {
     currentPage.value = 1
     getData()
 }
-
+defineProps({
+    openChoose:{
+        type:Boolean,
+        default:false
+    }
+})
 // 图片重命名
 const modifyImageName = (item) => {
     dilogElMessageBox('重命名', item.name).then((res) => {
@@ -101,6 +111,18 @@ const updateTableImage = ()=>{
 const handlesuccessimg=()=> {
     getData(1) 
     tableImage.value=false
+}
+// 计算图片选中个数
+const checkboxGrounp= computed(()=> list.value.filter(e=>e.checkbox  ))
+// 复选框
+const emit= defineEmits(['choose'])
+const handleCheckbox=(item)=>{
+    if (item.checkbox && checkboxGrounp.value.length >1 ) {
+        item.checkbox=false
+        return message('最多只能选中一个','error')
+    }
+    
+    emit('choose',checkboxGrounp.value )
 }
 defineExpose({
     IdClassgetData,
@@ -151,7 +173,6 @@ defineExpose({
     opacity: 0.5;
     line-height: 23px;
     padding-left: 4px;
-
-
 }
+
 </style>

@@ -7,7 +7,7 @@
         </el-header>
         <el-container>
             <imageAside ref="showOpen" @changeClassId="handlechange"></imageAside>
-            <imageMain ref="changeImage"></imageMain>
+            <imageMain :openChoose=openChooseImag ref="changeImage" @choose="choose"></imageMain>
 
         </el-container>
     </el-container>
@@ -35,6 +35,17 @@ const handlechange=(id)=>{
 const handleUpdateImage=()=>{
     changeImage.value.updateTableImage()
 }
+const emit = defineEmits(['chooseList'])
+const choose =(checkbox)=>{
+    emit('chooseList',checkbox)
+}
+defineProps({
+    openChooseImag:{
+        type:Boolean,
+        default:false
+    }
+})
+
 </script>
 
 <style  scoped>
@@ -42,5 +53,8 @@ const handleUpdateImage=()=>{
     border-bottom: 1px solid #eeeeee;
     display: flex;
     align-items: center;
+}
+::v-deep(.el-dialog__body){
+    padding: 0 !important;  
 }
 </style>

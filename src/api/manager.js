@@ -41,7 +41,7 @@ export function updatepassword(data){
  */
 // export function getinfo
 
-export function getManagerList(page,limit='',keyword=''){
+export function getManagerList(page,keyword='',limit=''){
     return instance({
         method:'get',
         url:`/admin/manager/${page}`,
@@ -49,6 +49,66 @@ export function getManagerList(page,limit='',keyword=''){
             limit,
             keyword
         }
+        
+    })
+}
+
+
+/**
+ * 修改用户管理状态
+ */
+// export function getinfo
+
+export function updateManagerStatus(id,status){
+    return instance({
+        method:'post',
+        url:`/admin/manager/${id}/update_status`,
+        data:{
+            status
+        }
+        
+    })
+}
+
+
+/**
+ * 增加管理员
+ */
+// export function getinfo
+
+export function createManager(data){
+    return instance({
+        method:'post',
+        url:`/admin/manager`,
+        data
+        
+    })
+}
+
+/**
+ * 修改管理员
+ */
+// export function getinfo
+
+export function updateManager(id,data){
+    return instance({
+        method:'post',
+        url:`//admin/manager/${id}`,
+        data
+        
+    })
+}
+
+/**
+ * 删除管理
+ */
+// export function getinfo
+
+export function delectManager(id){
+    return instance({
+        method:'post',
+        url:`/admin/manager/${id}/delete`,
+        
         
     })
 }
