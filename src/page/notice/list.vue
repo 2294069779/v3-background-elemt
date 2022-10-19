@@ -60,7 +60,6 @@ import { message } from "~/utility/utill.js"
 import { computed } from '@vue/reactivity';
 // 数据
 const tableData = ref(null)
-
 const loading = ref(false)
 // 分页数据
 const total = ref(0)
@@ -75,18 +74,13 @@ const getData = (p = null) => {
     getNotice(currentpage.value).then((res) => {
         total.value = res.totalCount
         tableData.value = res.list
-
     }).finally(() => {
         loading.value = false
     })
 }
 getData()
-
-
 const editId = ref(0)
 const drawerTitle = computed(() => editId.value ? "修改" : "新增")
-
-
 // 新增公共功能
 const fromDrawer = ref(null)
 // // 表单实例
@@ -103,7 +97,6 @@ const rules = {
         { required: true, message: '不能为空', trigger: 'blur' }
     ]
 }
-
 // // 提交公共
 const handlecreateNotice = () => {
     fromNoticeRef.value.validate((valid) => {
@@ -119,7 +112,6 @@ const handlecreateNotice = () => {
         })
     })
 }
-
 // 重置表单
 function resetFrom(row) {
     if(fromNoticeRef.value) fromNoticeRef.value.clearValidate()
@@ -128,7 +120,6 @@ function resetFrom(row) {
         fromNotice.content=row.content
     }
     fromDrawer.value.openShowDrawer()
-
 }
 // // 打开新增
 const handleopenShowDrawer = () => {

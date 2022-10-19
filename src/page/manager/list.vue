@@ -1,3 +1,32 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@2294069779 
+2294069779
+/
+v3-background-elemt
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+v3-background-elemt/src/page/manager/list.vue
+@2294069779
+2294069779 完成管理员模块
+Latest commit ed631a0 2 days ago
+ History
+ 1 contributor
+259 lines (233 sloc)  8.28 KB
+
 <template>
     <el-card shadow="never" class="border-0">
         <!-- 搜索 -->
@@ -121,7 +150,6 @@ import { computed } from '@vue/reactivity';
 import chooseImage from '~/components/chooseImage.vue'
 // 数据
 const tableData = ref(null)
-
 const loading = ref(false)
 // 分页数据
 const total = ref(0)
@@ -134,13 +162,11 @@ const roleidList = ref(null)
 const searchForm = reactive({
     keyword: ''
 })
-
 // 重置表单
 const resetSearchForm = () => {
     searchForm.keyword = ''
     getData()
 }
-
 // 改变状态
 const changeStatus = (status, row) => {
     console.log(status)
@@ -167,18 +193,13 @@ const getData = (p = null) => {
             return a
         })
         roleidList.value = res.roles
-
     }).finally(() => {
         loading.value = false
     })
 }
 getData()
-
-
 const editId = ref(0)
 const drawerTitle = computed(() => editId.value ? "修改" : "新增")
-
-
 // 新增公共功能
 const fromDrawer = ref(null)
 // // 表单实例
@@ -190,8 +211,6 @@ const fromManager = reactive({
     status: 1,
     avatar: ''
 })
-
-
 // // 提交公共
 const handlecreateNotice = () => {
     fromNoticeRef.value.validate((valid) => {
@@ -207,23 +226,16 @@ const handlecreateNotice = () => {
         })
     })
 }
-
 // 重置表单
-function resetFrom(row) {
+function resetFrom(row = false) {
     if (fromNoticeRef.value) fromNoticeRef.value.clearValidate()
-    if (row) {
-        fromManager.username= '',
-        fromManager.password= '',
-        fromManager.role_id= null,
-        fromManager.status= 1,
-        fromManager.avatar= ''
+    for (const key in fromManager ) {
+        fromManager[key] = row[key]
     }
     fromDrawer.value.openShowDrawer()
-
 }
 // // 打开新增
 const handleopenShowDrawer = () => {
-
     editId.value = 0
     resetFrom({
         username: '',

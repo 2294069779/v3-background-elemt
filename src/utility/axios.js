@@ -7,7 +7,7 @@ import store from "../store";
 
 const instance=axios.create({
     baseURL: '/api',
-  timeout: 1000,
+  timeout: 5000,
 //   headers: {'X-Custom-Header': 'foobar'}
 })
 // 添加请求拦截器
@@ -34,6 +34,7 @@ instance.interceptors.response.use(function (response) {
 }, function (error) {
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误做点什么
+  console.log(error)
    
     const msg = error.response.data.msg
    
